@@ -1,5 +1,5 @@
 " -------------------------------------------Vim-Plug-----------------------------------------
-"// PLUGIN SETTINGS
+" // PLUGIN SETTINGS
 call plug#begin('/home/elsy/.config/nvim/plugged')
 
 Plug 'vim-airline/vim-airline'
@@ -10,23 +10,31 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'overcache/NeoSolarized'
 Plug 'Yggdroot/indentLine'
 
-Plug 'tribela/vim-transparent'
-Plug 'neoclide/coc.nvim'
+Plug 'xiyaowong/transparent.nvim'
+
 Plug 'tpope/vim-commentary'
-Plug 'rcarriga/nvim-notify'
+Plug 'neoclide/coc.nvim'
 Plug 'MunifTanjim/nui.nvim'
 
-" Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'vim-jp/syntax-vim-ex'
+Plug 'nvim-treesitter/nvim-treesitter'
+" Plug 'vim-jp/syntax-vim-ex'
 
 call plug#end()
 
-lua << EOF
-vim.notify = require("notify")
-EOF
+" NeoSolarized
+colorscheme NeoSolarized
+let g:neosolarized_contrast = "high"
+let g:neosolarized_visibility = "high"
+
+
+" True Color
+set termguicolors
+
 
 " NERDTree SETTINGS
 nmap <C-e> :NERDTreeToggle<CR>
+
+nmap <C-h> :TransparentToggle<CR>
 
 " Airline SETTINGS
 let g:airline_powerline_fonts = 1
@@ -34,10 +42,6 @@ let g:airline_theme = 'base16_solarized'
 let g:airline#extensions#tabline#enabled = 1
 nmap <C-p> <Plug>AirlineSelectPrevTab
 
-" NeoSolarized
-colorscheme NeoSolarized
-let g:neosolarized_contrast = "high"
-let g:neosolarized_visibility = "high"
 
 " SPLIT BORDER SETTINGS
 hi VertSplit cterm=none
@@ -45,26 +49,27 @@ hi VertSplit cterm=none
 "--------------------------------------------Vim-Plug-----------------------------------------
 
 "--------------------------------------------Setting------------------------------------------
-"行番号を表示
+
+" Line Number
 set number
-"改行時に自動でインデントする
+" Auto Indent
 set autoindent
-"タブを何文字の空白に変換するか
-set tabstop=4
-"自動インデント時に入力する空白の数
+" Auto Indent Length
 set shiftwidth=4
+" Tab Length
+set tabstop=4
+" Clipboard
 set clipboard+=unnamedplus
-" True Color対応
-set termguicolors
-"ターミナルのタブ名に現在編集中のファイル名を設定
+" Tab Title <- File Name
 set title
-"括弧入力時の対応する括弧を表示
+" Show Pair Highlight
 set showmatch
-"文字コード
+" Encode
 set encoding=utf-8
-set pumblend=10
-" 現在のウィンドウの半透明度を指定する。
-set winblend=10
+" " Coc Suggest Transparent
+" set pumblend=40
+" " Coc Floating Window Transparent
+" set winblend=40
 
 "--------------------------------------------Setting------------------------------------------
 
@@ -74,8 +79,9 @@ set winblend=10
 " Run Python
 nmap <F5> :w<CR>:!python3 %<CR>
 imap <F5> <Esc>:w<CR>:!python3 %<CR>
+" nmap <F5> :w<CR>:!gcc % && ./a.out<CR>
+" imap <F5> <Esc>:w<CR>:gcc % && ./a.out<CR>
 nmap <S-p> :25<CR><S-v><S-g>y
-
 
 " comment out
 nmap <C-_> gcc
@@ -85,10 +91,10 @@ imap <C-_> <Esc>gcca
 " No highlight
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
 
-" Enterで確定
+" Suggest Select Enter
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
-" <Tab>で次、<S+Tab>で前
+" Suggest Select Tab
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
@@ -104,7 +110,19 @@ inoremap <silent><expr> <c-space> coc#refresh()
 "imap <S-z> $
 "nmap <A-b> a<br><Esc>
 "imap <A-b> <br>
-"imap <S-CR> <Esc>:w<CR>:!python3 %<CR>
 
 
 "-------------------------------------------Set-Alias-----------------------------------------
+
+
+" lua << EOF
+" require'nvim-treesitter.configs'.setup {
+"     ensure_installed = 'all',
+"     highlight = {
+"         enable = true,
+"         additional_vim_regex_highlighting = false,
+"     },
+" }
+" EOF
+
+
